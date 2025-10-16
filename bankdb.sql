@@ -1,0 +1,32 @@
+DROP DATABASE IF EXISTS bankdb;
+CREATE DATABASE bankdb;
+USE bankdb;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    transaction_pin VARCHAR(6) DEFAULT NULL,
+    login_pin VARCHAR(6) NOT NULL
+);
+
+CREATE TABLE accounts (
+    acc_no INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    balance DOUBLE DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    acc_no INT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    amount DOUBLE NOT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (acc_no) REFERENCES accounts(acc_no) ON DELETE CASCADE
+);
+
+
+
